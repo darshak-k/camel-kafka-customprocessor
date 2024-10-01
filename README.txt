@@ -1,11 +1,9 @@
 *********************************************************************************************
-* Smile CDR Camel Demo Project
+* Smile CDR Camel Project
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 This project is an example project demonstrating how to create a Smile CDR
-Camel JAR. It is designed so that you can use it as a guide if you like,
-but you can also simply use it as a starter for your project and begin
-building directly in this project.
+Camel JAR. It is designed so that you can use it as a guide if you like.
 
 *********************************************************************************************
 * Contents
