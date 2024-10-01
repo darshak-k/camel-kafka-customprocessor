@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>ca.uhn.hapi.fhir</groupId>
+		<artifactId>hapi-fhir</artifactId>
+		<version>7.1.7-SNAPSHOT</version>
+		<relativePath />
+	</parent>
+	<properties>
+		<hapi_fhir_version>7.1.7-SNAPSHOT</hapi_fhir_version>
+		<cdr_api_version>2024.05.PRE-47</cdr_api_version>
+		<camel.version>4.1.0</camel.version>
+	</properties>
+	<groupId>ca.cdr.demo</groupId>
+	<artifactId>cdr-camel-demoproject</artifactId>
+	<name>Smile CDR - Camel (Demo Project)</name>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+	<repositories>
+		<repository>
+			<id>smilecdr-api-public-maven</id>
+			<url>https://gitlab.com/api/v4/projects/24364373/packages/maven</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>oss-snapshots</id>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
+	<dependencies>
+		<!-- Apache Camel -->
+		<!--
+			You can add dependencies for non-core components:
+			https://camel.apache.org/components/3.21.x/index.html#_components
+		-->
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-core</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>com.sun.xml.bind</groupId>
+					<artifactId>jaxb-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-timer</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.10.1</version>
+		</dependency>
+		<!-- Smile -->
+		<dependency>
+			<groupId>com.smilecdr</groupId>
+			<artifactId>cdr-api-public-java</artifactId>
+			<version>${cdr_api_version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>ca.uhn.hapi.fhir</groupId>
+					<artifactId>hapi-fhir-base</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>ca.uhn.hapi.fhir</groupId>
+					<artifactId>hapi-fhir-storage</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>ca.uhn.hapi</groupId>
+					<artifactId>hapi-base</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!--
+		  A "structures" JAR contains the FHIR model classes. You should
+		  import the JAR with the version of FHIR you are planning on
+		  supporting. Here we import the R4 version in order to
+		  satisfy the demo project, but you should probably switch this to the
+		  fhir version you need.
+		  -->
+		<dependency>
+			<groupId>ca.uhn.hapi.fhir</groupId>
+			<artifactId>hapi-fhir-structures-r4</artifactId>
+			<version>${hapi_fhir_version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<!--
+		  The Camel module uses the Spring version in the parent hapi-fhir pom
+		  -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring_version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring_version}</version>
+		</dependency>
+		<!--
+		  Logging - Smile CDR uses the SLF4j API for logging, so it is
+		  recommended to do the same. The "slf4j-simple" adapter is included
+		  here for testing, but can be removed.
+		  -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j_version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${slf4j_version}</version>
+			<optional>true</optional>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>ca.uhn.hapi.fhir</groupId>
+			<artifactId>hapi-fhir-server</artifactId>
+			<version>${hapi_fhir_version}</version>
+		</dependency>
+	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-bom</artifactId>
+				<version>${camel.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<!--
+            This plugin creates an archive of the sources for this entire project. You can remove this
+            plugin from your own project if that is not useful, as it is the JAR file which is produced
+            by default that is actually needed in order to install the Camel custom classes.
+            -->
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<attach>true</attach>
+					<descriptors>
+						<descriptor>src/main/assembly/src.xml</descriptor>
+					</descriptors>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.2.1</version>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,4 @@
+com\example\camel\transaction\SampleCustomProcessorAddingTxLogSteps.class
+com\example\camel\transaction\SampleCustomProcessorAddingTxLogStepsLazily.class
+org\example\camel\hybrid\TestHybridProviderAppCtx.class
+org\example\camel\hybrid\DirectCamelEndpointLinkProvider.class
