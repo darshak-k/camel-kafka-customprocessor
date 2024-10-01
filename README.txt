@@ -15,8 +15,8 @@ This project is laid out as a standard Maven project. All source files are
 found in the "src/main/java" directory, and the sources contain the following
 classes:
 
-com.example.camel.TestCustomProcessor  - Custom Apache Camel Processor
-com.example.camel.TestCustomAppCtx     - Custom Spring Context
+com.example.camel.CamelResourceProcessor  - Custom Apache Camel Processor
+com.example.camel.CamelCustomProcessorCtx     - Custom Spring Context
 
 *********************************************************************************************
 * Deploying
